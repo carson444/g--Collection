@@ -3,7 +3,7 @@ window.FIXED = [
   {
     "id": "s1",
     "name": "Bleu Royal",
-    "price": 6000,
+    "price": 5000,
     "description": "Un bleu électrique profond, parsemé d'éclats blancs comme un ciel de nuit. Une pièce qui s'impose dès l'entrée.",
     "category": "Bleus",
     "image": "images/bleu-royal.jpg",
