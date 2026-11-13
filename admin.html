@@ -11,7 +11,7 @@ label{font-weight:500;font-size:.9rem}#panel{display:none}
 .item{display:grid;grid-template-columns:60px 1fr auto;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .item img{width:60px;height:75px;object-fit:cover;background:var(--line)}
 .msg{color:var(--red);min-height:1.4em;margin-top:10px}
-body{background:var(--lav)}.box{border-radius:24px}input,select,textarea{border-radius:12px!important}</style></head><body>
+body{background:var(--lav)}.box{border-radius:24px}input,select,textarea{border-radius:12px!important}@media(max-width:800px){#panel .wrap{grid-template-columns:1fr!important;gap:32px!important}.item{grid-template-columns:52px 1fr}.item>div:last-child{grid-column:1/-1}.item img{width:52px;height:66px}.box{margin:40px 16px;padding:24px}}</style></head><body>
 <header><div class="wrap"><a class="brand" href="/"><img src="logo.svg" alt=""><span><b>G COLLECTION</b><i>ADMINISTRATION</i></span></a><nav><a href="/">Voir le site</a></nav></div></header>
 
 <div class="box" id="login">
@@ -33,17 +33,17 @@ body{background:var(--lav)}.box{border-radius:24px}input,select,textarea{border-
 </div></section></div>
 
 <script>
-const $=s=>document.querySelector(s);let code=sessionStorage.getItem("gc_code")||"";
+const $=s=>document.querySelector(s);let code="";
 const H=()=>({"Content-Type":"application/json","x-admin-code":code});
 async function login(){
   let r;try{r=await fetch("/api/sign",{headers:H()})}catch{$("#err").textContent="Connexion impossible. Vérifiez votre internet.";return}
   if(!r.ok){let m="";try{m=(await r.json()).error}catch{}
     $("#err").textContent=r.status===404?"Le serveur de l'admin n'est pas actif. Ouvrez le site depuis son adresse Vercel (https://…vercel.app/admin.html), pas depuis un fichier de votre ordinateur.":(m||"Erreur "+r.status);return}
-  sessionStorage.setItem("gc_code",code);$("#login").style.display="none";$("#panel").style.display="block";list();
+  $("#login").style.display="none";$("#panel").style.display="block";list();
 }
 $("#go").onclick=()=>{code=$("#code").value.trim();login()};
 $("#code").onkeydown=e=>{if(e.key==="Enter")$("#go").click()};
-if(code)login();
+
 async function list(){
   const ps=await(await fetch("/api/products")).json();
   $("#list").innerHTML=ps.length?ps.map(p=>`<div class="item"><img src="${p.image}" alt="">
