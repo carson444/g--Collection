@@ -5,6 +5,7 @@ try { cart = JSON.parse(localStorage.getItem("gc_cart") || "{}"); } catch {}
 const fmt = n => Number(n).toLocaleString("fr-FR") + " FCFA";
 const opt = u => u ? u.replace("/upload/", "/upload/f_auto,q_auto,w_700/") : "";
 
+const io = window.IntersectionObserver ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 }) : null;
 async function load() {
   products = [...(window.FIXED || [])]; render();           // catalogue du fichier products.js
   try {                                                      // + produits ajoutés depuis l'admin
@@ -17,10 +18,11 @@ function render() {
   $("#cats").innerHTML = cats.map(c => `<button class="chip ${c === cat ? "on" : ""}" data-c="${c}">${c}</button>`).join("");
   const list = products.filter(p => cat === "Tous" || p.category === cat);
   $("#grid").innerHTML = list.length ? list.map(p => `<article class="card">
-    <div class="ph">${p.image ? `<img src="${opt(p.image)}" alt="${p.name}" loading="lazy">` : ""}${p.in_stock ? "" : '<span class="out">Épuisé</span>'}</div>
+    <div class="ph">${p.image ? `<img src="${opt(p.image)}" alt="${p.name}" loading="lazy">` : ""}<span class="tag">6 yards</span>${p.in_stock ? "" : '<span class="out">Épuisé</span>'}</div>
     <div class="info"><h3>${p.name}</h3><p>${p.description || ""}</p>
     <div class="row"><b>${fmt(p.price)}</b><button class="btn sm" data-add="${p.id}" ${p.in_stock ? "" : "disabled"}>Ajouter au panier</button></div></div></article>`).join("")
     : `<p class="empty">Les nouveaux pagnes arrivent bientôt.</p>`;
+  document.querySelectorAll(".card").forEach(c => { c.classList.add("rv"); window.IntersectionObserver ? io.observe(c) : c.classList.add("in"); });
   drawCart();
 }
 function drawCart() {
@@ -49,5 +51,5 @@ document.addEventListener("click", e => {
 $("#fab").onclick = () => open(true);
 $("#close").onclick = $("#veil").onclick = () => open(false);
 document.addEventListener("keydown", e => e.key === "Escape" && open(false));
-$("#wa").href = `https://wa.me/${WA}`;
+$("#wa").href = $("#wa2").href = `https://wa.me/${WA}`;
 load();
