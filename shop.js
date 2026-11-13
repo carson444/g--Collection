@@ -1,4 +1,4 @@
-onst WA = "22871048481"; // WhatsApp G Collection
+const WA = "22871048481"; // WhatsApp G Collection
 const $ = s => document.querySelector(s);
 let products = [], cat = "Tous", cart = {};
 try { cart = JSON.parse(localStorage.getItem("gc_cart") || "{}"); } catch {}
