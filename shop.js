@@ -51,5 +51,6 @@ document.addEventListener("click", e => {
 $("#fab").onclick = () => open(true);
 $("#close").onclick = $("#veil").onclick = () => open(false);
 document.addEventListener("keydown", e => e.key === "Escape" && open(false));
-$("#wa").href = $("#wa2").href = `https://wa.me/${WA}`;
+document.querySelectorAll("#wa, #wa2").forEach(a => a.href = `https://wa.me/${WA}`);
 load();
+
